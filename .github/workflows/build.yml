@@ -12,7 +12,10 @@ jobs:
       contents: write
 
     steps:
-        -   uses: actions/checkout@v2
+        - name: Free Disk Space
+          uses: jlumbroso/free-disk-space@main
+
+        - uses: actions/checkout@v2
 
         - name: Prepare Environment
           run: |
@@ -31,7 +34,7 @@ jobs:
           run: |
             bash build.sh
         
-        - name: Delete previous release
+        - name: Delete Previous Release
           run: gh release delete weekly --cleanup-tag --yes
           env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
