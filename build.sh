@@ -1,9 +1,9 @@
 #!/bin/bash
 
 #=======================================#
-#                                                                                                 #
-#               ImmortalWrt Firmware Auto-Build Script                #
-#                                                                                                 #
+#                                                                                                  #
+#               ImmortalWrt Firmware Auto-Build Script                 #
+#                                                                                                  #
 #=======================================#
 
 # 当任何命令执行失败时立即退出脚本
@@ -126,7 +126,7 @@ feeds_duration=$(format_time "$feeds_start_time" "$feeds_end_time")
 print_ok "Feeds 更新与安装完成, 耗时 ${feeds_duration}."
 
 print_step "步骤 4: 开始编译固件 (这将花费很长时间...)"
-print_warn "编译日志将实时输出.冲杯咖啡, 耐心等待吧！☕"
+print_warn "编译日志将实时输出. 冲杯咖啡, 耐心等待吧. ☕"
 make_start_time=$(date +%s)
 make "-j${CORES}"
 make_end_time=$(date +%s)
