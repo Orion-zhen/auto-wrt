@@ -1,8 +1,8 @@
-name: Auto Build ImmortalWrt
+name: Auto Build OpenWrt
 
 on:
-  schedule:
-    - cron: "0 0 * * 1"
+  # schedule:
+  #   - cron: "0 0 * * 1"
   workflow_dispatch: # 允许手动触发
 
 jobs:
@@ -12,8 +12,8 @@ jobs:
       contents: write
 
     steps:
-        - name: Free Disk Space
-          uses: jlumbroso/free-disk-space@main
+        # - name: Free Disk Space
+        #   uses: jlumbroso/free-disk-space@main
 
         - uses: actions/checkout@v2
 
@@ -44,7 +44,7 @@ jobs:
           uses: softprops/action-gh-release@v2
           with:
             tag_name: "weekly"
-            name: "Weekly ImmortalWrt Build"
+            name: "Weekly OpenWrt Build"
             body: |
               **Automated Weekly Build**
               
@@ -53,4 +53,4 @@ jobs:
               - Build Time: `$(date)`
             draft: false
             prerelease: false
-            files: immortalwrt/bin/targets/**/*.*
+            files: openwrt/bin/targets/**/*.*

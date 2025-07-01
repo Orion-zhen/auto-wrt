@@ -11,10 +11,10 @@
 set -eo pipefail
 
 # --- 全局变量和颜色定义 ---
-CLONE_DIR="immortalwrt"
+CLONE_DIR="openwrt"
 CONFIG_FILE=".config"
-REPO_URL="https://github.com/immortalwrt/immortalwrt.git"
-REPO_BRANCH="master"
+REPO_URL="https://github.com/openwrt/openwrt.git"
+REPO_BRANCH="main"
 
 # 终端颜色代码
 BLUE='\033[1;34m'
@@ -77,7 +77,7 @@ function final_summary() {
 
     echo -e "${BLUE}======================================================================${RESET}"
     if [ $exit_code -eq 0 ]; then
-        print_ok "ImmortalWrt 构建流程成功结束！"
+        print_ok "ImmortalWrt 构建流程成功结束!"
         print_warn "固件及相关文件位于 '${CLONE_DIR}/bin/targets' 目录下."
     else
         print_error "构建流程因错误而中止 (退出码: $exit_code)."
@@ -112,10 +112,12 @@ cd "$CLONE_DIR"
 print_step "步骤 3: 应用自定义配置并更新 Feeds"
 # 检查 .config 文件是否存在
 if [ ! -f "../$CONFIG_FILE" ]; then
-    print_error "自定义配置文件 '${CONFIG_FILE}' 在项目根目录未找到！"
+    print_error "自定义配置文件 '${CONFIG_FILE}' 在项目根目录未找到!"
 fi
 
 cp "../$CONFIG_FILE" .
+sed -i '1i src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
+sed -i '2i src-git small https://github.com/kenzok8/small' feeds.conf.default
 print_ok "已将自定义配置文件 '${CONFIG_FILE}' 复制到源码目录."
 
 feeds_start_time=$(date +%s)
@@ -123,6 +125,7 @@ feeds_start_time=$(date +%s)
 ./scripts/feeds install -a
 feeds_end_time=$(date +%s)
 feeds_duration=$(format_time "$feeds_start_time" "$feeds_end_time")
+make download "-j${CORES}"
 print_ok "Feeds 更新与安装完成, 耗时 ${feeds_duration}."
 
 print_step "步骤 4: 开始编译固件 (这将花费很长时间...)"
