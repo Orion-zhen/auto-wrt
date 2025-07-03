@@ -123,8 +123,8 @@ print_ok "已将自定义配置文件 '${CONFIG_FILE}' 复制到源码目录."
 feeds_start_time=$(date +%s)
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-make download
 make defconfig
+make download
 feeds_end_time=$(date +%s)
 feeds_duration=$(format_time "$feeds_start_time" "$feeds_end_time")
 print_ok "Feeds 更新与安装完成, 耗时 ${feeds_duration}."
@@ -132,8 +132,8 @@ print_ok "Feeds 更新与安装完成, 耗时 ${feeds_duration}."
 print_step "步骤 4: 开始编译固件 (这将花费很长时间...)"
 print_warn "编译日志将实时输出. 冲杯咖啡, 耐心等待吧. ☕"
 make_start_time=$(date +%s)
-make "-j${CORES}"
-# make -j1 V=s
+# make "-j${CORES}"
+make -j1 V=s
 make_end_time=$(date +%s)
 make_duration=$(format_time "$make_start_time" "$make_end_time")
 print_ok "固件编译完成, 耗时 ${make_duration}."
