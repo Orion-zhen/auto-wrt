@@ -72,12 +72,14 @@ jobs:
       - name: Build
         if: ${{ !inputs.debug }}
         run: |
+          export FORCE_UNSAFE_CONFIGURE=1
           cd ./openwrt
           make -j$(nproc)
 
       - name: Debug Build
         if : ${{ inputs.debug }}
         run: |
+          export FORCE_UNSAFE_CONFIGURE=1
           cd ./openwrt
           make -j1 V=s
 
