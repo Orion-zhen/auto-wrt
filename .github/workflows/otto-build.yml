@@ -31,26 +31,26 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Fetch OpenWrt Code
+      - name: Fetch Source Code
         uses: actions/checkout@v4
         with:
-          repository: openwrt/openwrt
+          repository: immortalwrt/immortalwrt
           ref: main
           path: ./openwrt
 
-      - name: Fetch ImmortalWrt Packages
-        uses: actions/checkout@v4
-        with:
-          repository: immortalwrt/packages
-          ref: master
-          path: ./openwrt/feeds/packages
+      # - name: Fetch ImmortalWrt Packages
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: immortalwrt/packages
+      #     ref: master
+      #     path: ./openwrt/feeds/packages
 
-      - name: Fetch LuCI Packages
-        uses: actions/checkout@v4
-        with:
-          repository: immortalwrt/luci
-          ref: master
-          path: ./openwrt/feeds/luci
+      # - name: Fetch LuCI Packages
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: immortalwrt/luci
+      #     ref: master
+      #     path: ./openwrt/feeds/luci
 
       - name: Feeds
         run: |
@@ -62,7 +62,7 @@ jobs:
         run: |
           export FORCE_UNSAFE_CONFIGURE=1
           cd ./openwrt
-          make defconfig
+          # make defconfig
           cp ../.config .
 
       - name: Make Download
