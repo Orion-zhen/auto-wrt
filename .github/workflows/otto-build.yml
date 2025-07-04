@@ -62,7 +62,7 @@ jobs:
         run: |
           export FORCE_UNSAFE_CONFIGURE=1
           cd ./openwrt
-          # make defconfig
+          make defconfig
           cp ../.config .
 
       - name: Make Download
