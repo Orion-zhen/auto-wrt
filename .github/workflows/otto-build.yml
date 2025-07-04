@@ -7,6 +7,10 @@ on:
         type: boolean
         description: debug build
         default: false
+      use-defconfig:
+        type: boolean
+        description: use default config
+        default: false
 
 jobs:
   otto-build:
@@ -59,11 +63,18 @@ jobs:
           ./scripts/feeds install -a
 
       - name: Customize Config
+        if: ${{ !inputs.use-defconfig }}
+        run: |
+          export FORCE_UNSAFE_CONFIGURE=1
+          cd ./openwrt
+          cp ../.config .
+
+      - name: Default Config
+        if: ${{ inputs.use-defconfig }}
         run: |
           export FORCE_UNSAFE_CONFIGURE=1
           cd ./openwrt
           make defconfig
-          cp ../.config .
 
       - name: Make Download
         run: |
